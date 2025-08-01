@@ -12,7 +12,7 @@ SYMLINK_PATH="/usr/local/bin/rw-backup"
 REMNALABS_ROOT_DIR=""
 ENV_NODE_FILE=".env-node"
 ENV_FILE=".env"
-SCRIPT_REPO_URL="https://raw.githubusercontent.com/distillium/remnawave-backup-restore/main/backup-restore.sh"
+SCRIPT_REPO_URL="https://raw.githubusercontent.com/famebloody/remnawave-backup-restore/main/backup-restore.sh"
 SCRIPT_RUN_PATH="$(realpath "$0")"
 GD_CLIENT_ID=""
 GD_CLIENT_SECRET=""
@@ -981,7 +981,7 @@ restore_backup() {
     
     : > "$RESTORE_LOG_FILE"
 
-    if cat "$SQL_FILE" | docker exec -i "remnawave-db" psql -q -U "$DB_USER" > /dev/null 2>>"$RESTORE_LOG_FILE"; then
+    if cat "$SQL_FILE" | docker exec -i "remnawave-db" psql -q -U "$DB_USER" -d postgres > /dev/null 2>>"$RESTORE_LOG_FILE"; then
         print_message "SUCCESS" "Импорт базы данных успешно завершен."
         local restore_success_prefix="✅ Восстановление Remnawave DB успешно завершено из файла: "
         local restored_filename="${SELECTED_BACKUP##*/}"
